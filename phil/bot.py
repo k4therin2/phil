@@ -4,11 +4,11 @@ from pprint import pprint
 import random
 
 def main():
-	USERNAME = 'chic_phil_a'
+	username = 'Chic_Phil_A'
 	quotes = 'quotes.txt'
-    
-	with open(quotes) as quotes_file:
-		quotes = [line.strip() for line in quotes_file if line != "\n"]
+	#Opens quotes file for quotes of anguish (line fo each quote)
+	with open(quotes) as f:
+		quotes = [line.strip() for line in f if line != "\n"]
 
 	pprint(quotes)
 
@@ -20,7 +20,7 @@ def main():
 
 	for tweet in stream:
 
-		pprint(tweet)
+		#pprint(tweet)
 
 		if 'event' in tweet:
 			print('received event %s' % tweet['event'])
@@ -28,10 +28,8 @@ def main():
 		elif 'hangup' in tweet:
 			return
 
-		elif 'text' in tweet and tweet['user']['screen_name'] != USERNAME:
-
+		elif 'text' in tweet and tweet['user']['screen_name'] != username:
 			print('from @%s: %s' % (tweet['user']['screen_name'], tweet['text']))
-
 			line = random.choice(quotes)
 			print('responding with line: %s' % line)
 			reply = '@' + tweet['user']['screen_name'] + ' ' + line
